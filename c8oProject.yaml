@@ -1,0 +1,7 @@
+↑convertigo: 8.0.0.m006
+↓lib_datasource_csv [core.Project]: 
+  comment: Mashup Sequencer project
+  version: 1.0
+  ↓void [connectors.SqlConnector]: 🗏 connectors/void.yaml
+  ↓formssource_data_from_csv [sequences.GenericSequence]: 🗏 sequences/formssource_data_from_csv.yaml
+  ↓upload_csv_list [sequences.GenericSequence]: 🗏 sequences/upload_csv_list.yaml

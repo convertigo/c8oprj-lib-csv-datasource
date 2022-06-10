@@ -1,0 +1,34 @@
+↓IfFileExistsThenElse [steps.IfFileExistThenElseStep-1654874426520]: 
+  condition: csv_file
+  ↓jThen [steps.ThenStep-1654874426523]: 
+    ↓Copy_file [steps.CopyStep-1654874426526]: 
+      destinationPath: '".//data"'
+      overwrite: true
+      sourcePath: csv_file
+    ↓get_filename [steps.SimpleStep-1654874426529]: 
+      expression: |
+        path_separator = java.io.File.separator;
+        cp_file_name = csv_file.substring(csv_file.lastIndexOf(""+path_separator)+1);
+        cp_file_path = context.getProjectDirectory() + path_separator + "data" + path_separator + cp_file_name;
+    ↓IfFileExistsThenElse [steps.IfFileExistThenElseStep-1654874426532]: 
+      condition: '".//data/" + cp_file_name'
+      ↓jThen [steps.ThenStep-1654874426535]: 
+        ↓jElement [steps.ElementStep-1654874426538]: 
+          expression: ''''''
+          nodeName: succes
+          ↓jAttribute [steps.AttributeStep-1654874426541]: 
+            expression: cp_file_path
+            nodeName: filepath
+          ↓jAttribute1 [steps.AttributeStep-1654874426544]: 
+            expression: cp_file_name
+            nodeName: filename
+      ↓jElse [steps.ElseStep-1654874426547]: 
+        ↓Element [steps.XMLElementStep-1654874426550]: 
+          nodeName: erreur
+          nodeText: Echec copie fichier
+  ↓jElse [steps.ElseStep-1654874426553]: 
+    ↓Element [steps.XMLElementStep-1654874426556]: 
+      nodeName: erreur
+      nodeText: Echec upload fichier
+↓csv_file [variables.RequestableVariable-1654874426559]: 
+  isFileUpload: true
