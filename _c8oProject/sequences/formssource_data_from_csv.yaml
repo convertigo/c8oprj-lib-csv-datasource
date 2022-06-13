@@ -11,7 +11,6 @@ comment: |
   ↓jThen [steps.ThenStep-1654874914955]: 
     ↓Read_CSV [steps.ReadCSVStep-1654875073765]: 
       dataFile: '".//data/" + forms_csv_file_name'
-      separator: ;
       titleLine: true
     ↓jIf [steps.IfStep-1655122878218]: 
       condition: forms_data_type == "grid" || forms_data_type == ""

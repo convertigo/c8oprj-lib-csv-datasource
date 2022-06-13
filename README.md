@@ -8,7 +8,7 @@ This lib generates data sources for Grids components in the Convertigo No-Code S
 
 First thing first, the CSV file has to be uploaded to the No-Code server using the **upload_csv_list** sequence.\
 The first line of the CSV file is **mandatory** and must contain the columns title.\
-Data are separated by semicolons [';']\
+Data are separated by commas [',']\
 For example, for a Grid component:
 
 ```
