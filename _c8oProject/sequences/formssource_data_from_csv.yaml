@@ -27,44 +27,51 @@ comment: |
                 - ↑value: 1654875073765
               - java.lang.String: 
                 - ↑value: ./line
-        ↓item [steps.XMLComplexStep-1654875183370]: 
-          nodeName: item
-          ↓Attribute [steps.XMLAttributeStep-1654875183376]: 
-            nodeName: type
-            nodeText: object
-          ↓Iterator [steps.IteratorStep-1654875353704]: 
-            sourceDefinition: 
-              - xmlizable: 
-                - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
-                - com.twinsoft.convertigo.beans.common.XMLVector: 
-                  - java.lang.String: 
-                    - ↑value: 1654875183364
-                  - java.lang.String: 
-                    - ↑value: ./*
-            ↓Complex2 [steps.XMLComplexStep-1654875183415]: 
-              nodeName: col
-              ↓Attribute [steps.XMLAttributeStep-1654877678969]: 
-                nodeName: type
-                nodeText: object
-              ↓jAttribute [steps.AttributeStep-1654878014071]: 
-                expression: '''col_''+item.getNodeName()'
-                nodeName: originalKeyName
-              ↓Element2 [steps.XMLElementStep-1654875183421]: 
-                nodeName: type
-                nodeText: string
-              ↓Element [steps.XMLElementStep-1654875183418]: 
-                nodeName: displayValue
-                sourceDefinition: 
-                  - xmlizable: 
-                    - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
-                    - com.twinsoft.convertigo.beans.common.XMLVector: 
-                      - java.lang.String: 
-                        - ↑value: 1654875353704
-                      - java.lang.String: 
-                        - ↑value: ./text()
-              ↓jElement [steps.ElementStep-1654876544173]: 
-                expression: item.getNodeName()
-                nodeName: displayName
+        ↓jIf [steps.IfStep-1655116878701]: 
+          condition: forms_filter_value != "" && forms_filter_column != "" && item.getElementsByTagName(forms_filter_column).getLength() > 0 && (item.getElementsByTagName(forms_filter_column).item(0).getTextContent()+'') == forms_filter_value
+          ↓item [steps.XMLComplexStep-1654875183370]: 
+            nodeName: item
+            ↓Attribute [steps.XMLAttributeStep-1654875183376]: 
+              nodeName: type
+              nodeText: object
+            ↓jIf [steps.IfStep-1655113633513]: 
+              condition: forms_rowvalue_col != "" && item.getElementsByTagName(forms_rowvalue_col).getLength() > 0
+              ↓rowValue [steps.ElementStep-1655113871187]: 
+                expression: item.getElementsByTagName(forms_rowvalue_col).item(0).getTextContent()
+                nodeName: __rowValue
+            ↓Iterator [steps.IteratorStep-1654875353704]: 
+              sourceDefinition: 
+                - xmlizable: 
+                  - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+                  - com.twinsoft.convertigo.beans.common.XMLVector: 
+                    - java.lang.String: 
+                      - ↑value: 1654875183364
+                    - java.lang.String: 
+                      - ↑value: ./*
+              ↓Complex2 [steps.XMLComplexStep-1654875183415]: 
+                nodeName: col
+                ↓Attribute [steps.XMLAttributeStep-1654877678969]: 
+                  nodeName: type
+                  nodeText: object
+                ↓jAttribute [steps.AttributeStep-1654878014071]: 
+                  expression: '''col_''+item.getNodeName()'
+                  nodeName: originalKeyName
+                ↓Element2 [steps.XMLElementStep-1654875183421]: 
+                  nodeName: type
+                  nodeText: string
+                ↓Element [steps.XMLElementStep-1654875183418]: 
+                  nodeName: displayValue
+                  sourceDefinition: 
+                    - xmlizable: 
+                      - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+                      - com.twinsoft.convertigo.beans.common.XMLVector: 
+                        - java.lang.String: 
+                          - ↑value: 1654875353704
+                        - java.lang.String: 
+                          - ↑value: ./text()
+                ↓jElement [steps.ElementStep-1654876544173]: 
+                  expression: item.getNodeName()
+                  nodeName: displayName
   ↓jElse [steps.ElseStep-1654874914957]: 
     ↓Element [steps.XMLElementStep-1654875012486]: 
       nodeName: isSuccess
@@ -74,10 +81,52 @@ comment: |
     '{
         "en": {
             "displayName": "CSV file name",
-            "comment": "Name of the CSV file to read. This file was previously uploaded using the ''upload_csv_list'' sequence. Use the Convertigo Test Platform to upload the file. The first line of the file has to be the columns title. Semicolon ('';'') is the separator for the data"
+            "comment": "Mandatory. Name of the CSV file to read. This file was previously uploaded using the ''upload_csv_list'' sequence. Use the Convertigo Test Platform to upload the file. The first line of the file has to be the columns title. Semicolon ('';'') is the separator for the data"
         },
           "types":["select", "grid"]
     }'
+  required: true
+↓forms_rowvalue_col [variables.RequestableVariable-1655113409357]: 
+  comment: |
+    '{
+        "en": {
+            "displayName": "Column name for row value",
+            "comment": "Optional. Name of the column to retrieve value from, when the grid rows is clicked."
+        },
+          "types":["select", "grid"]
+    }'
+  value: 
+↓forms_filter_column [variables.RequestableVariable-1655116523559]: 
+  comment: |
+    '{
+        "en": {
+            "displayName": "Column name to filter",
+            "comment": "Optional. Name of the column to search value into."
+        },
+          "types":["select", "grid"]
+    }'
+  value: 
+↓forms_filter_value [variables.RequestableVariable-1655116551176]: 
+  comment: |
+    '{
+        "en": {
+            "displayName": "Value text to filter",
+            "comment": "Optional. In conjonction with the column name filter, only displays line that contains that specific value."
+        },
+          "types":["select", "grid"]
+    }'
+  value: 
 ↓Test_Case [core.TestCase]: 
   ↓forms_csv_file_name [variables.TestCaseVariable-1654876170022]: 
     value: data_source_csv.csv
+  ↓forms_rowvalue_col [variables.TestCaseVariable-1655113925413]: 
+    value: colonne_3
+↓Test_Case_1 [core.TestCase]: 
+  ↓forms_csv_file_name [variables.TestCaseVariable-1655117946833]: 
+    value: data_source_csv.csv
+  ↓forms_filter_column [variables.TestCaseVariable-1655117876582]: 
+    value: colonne_2
+  ↓forms_filter_value [variables.TestCaseVariable-1655117876584]: 
+    value: value 02
+  ↓forms_rowvalue_col [variables.TestCaseVariable-1655118245998]: 
+    value: colonne_2

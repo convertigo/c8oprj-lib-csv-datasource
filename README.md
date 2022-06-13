@@ -4,6 +4,8 @@ This lib generates data sources for Grids components in the Convertigo No-Code S
 
 ## Usage
 
+### upload_csv_list sequence
+
 First thing first, the CSV file has to be uploaded to the No-Code server using the **upload_csv_list** sequence.\
 The first line of the CSV file must contain the columns title.\
 Data are separated by semicolons [';']\
@@ -22,6 +24,8 @@ Use the **Convertigo Test Platform** to execute the sequence and upload your CSV
 
 ![LOW CODE TEST PLATFORM](./doc/imgs/nocode_studio_csv_datasources_00.png)
 
+### Grid data source
+
 In the No-Code Studio, import the "**Data sources from CSV file**" in your Grid component.
 
 ![GRID COMPONENT](./doc/imgs/nocode_studio_csv_datasources_01.png)
@@ -30,3 +34,12 @@ In the No-Code Studio, import the "**Data sources from CSV file**" in your Grid 
 Fill the "**CSV file name**" variable with the name of the uploaded CSV file (see first step).
 
 ![GRID DATA SOURCE VARIABLE](./doc/imgs/nocode_studio_csv_datasources_03.png)
+
+#### Variables
+
+| Name                    | Description                                           |
+|-------------------------|-------------------------------------------------------|
+| **forms_csv_file_name** | CSV File Name                                         |
+| **forms_rowvalue_col**  | Column name for the returned value of the clicked row |
+| **forms_filter_column** | Column name to filter on                              |
+| **forms_filter_value**  | Value text to filter on                               |
