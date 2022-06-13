@@ -12,6 +12,10 @@ comment: |
     ↓Read_CSV [steps.ReadCSVStep-1654875073765]: 
       dataFile: '".//data/" + forms_csv_file_name'
       titleLine: true
+    ↓Sequence_JS [steps.SimpleStep-1655135014805]: 
+      expression: |
+        forms_rowvalue_col = com.twinsoft.convertigo.engine.util.StringUtils.normalize(forms_rowvalue_col);
+        forms_filter_column = com.twinsoft.convertigo.engine.util.StringUtils.normalize(forms_filter_column);
     ↓jIf [steps.IfStep-1655122878218]: 
       condition: forms_data_type == "grid" || forms_data_type == ""
       ↓data [steps.XMLComplexStep-1654875183358]: 
@@ -20,6 +24,7 @@ comment: |
           nodeName: type
           nodeText: array
         ↓Iterator [steps.IteratorStep-1654875183364]: 
+          condition: '(forms_stop_index != null && forms_stop_index != "") ? forms_stop_index : -1'
           sourceDefinition: 
             - xmlizable: 
               - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
@@ -28,11 +33,12 @@ comment: |
                   - ↑value: 1654875073765
                 - java.lang.String: 
                   - ↑value: ./line
+          startIndex: '(forms_start_index != null && forms_start_index != "") ? forms_start_index : 0'
           ↓jIfThenElse [steps.IfThenElseStep-1655126398079]: 
-            condition: forms_filter_value != "" && forms_filter_column != "" && item.getElementsByTagName(forms_filter_column).getLength() > 0
+            condition: forms_filter_column != ""
             ↓jThen [steps.ThenStep-1655126398081]: 
               ↓jIf [steps.IfStep-1655126745261]: 
-                condition: (item.getElementsByTagName(forms_filter_column).item(0).getTextContent()+'') == forms_filter_value
+                condition: item.getElementsByTagName(forms_filter_column).getLength() > 0 && forms_filter_value != "" && (item.getElementsByTagName(forms_filter_column).item(0).getTextContent()+'').toLowerCase().indexOf(forms_filter_value.toLowerCase()) != -1
                 ↓item [steps.XMLComplexStep-1654875183370]: 
                   nodeName: item
                   ↓Attribute [steps.XMLAttributeStep-1654875183376]: 
@@ -128,6 +134,7 @@ comment: |
           nodeName: type
           nodeText: array
         ↓Iterator [steps.IteratorStep-1655122983407]: 
+          condition: '(forms_stop_index != null && forms_stop_index != "") ? forms_stop_index : -1'
           sourceDefinition: 
             - xmlizable: 
               - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
@@ -136,6 +143,7 @@ comment: |
                   - ↑value: 1654875073765
                 - java.lang.String: 
                   - ↑value: ./line
+          startIndex: '(forms_start_index != null && forms_start_index != "") ? forms_start_index : 0'
           ↓jIfThenElse [steps.IfThenElseStep-1655124814883]: 
             condition: forms_filter != ""
             ↓jThen [steps.ThenStep-1655124814886]: 
@@ -314,16 +322,56 @@ comment: |
           "types":["select"]
     }'
   value: 
+↓forms_start_index [variables.RequestableVariable-1655132607814]: 
+  comment: |
+    '{
+        "en": {
+            "displayName": "Starting index",
+            "comment": "Index to start reading data from CSV file. Default is 0."
+        },
+          "types":["select", "grid"]
+    }'
+  value: 0
+↓forms_stop_index [variables.RequestableVariable-1655132707727]: 
+  comment: |
+    '{
+        "en": {
+            "displayName": "Stopping index",
+            "comment": "Exclusive index to read data up to, from CSV file. Default is blank (no limit)."
+        },
+          "types":["select", "grid"]
+    }'
 ↓Test_Case [core.TestCase]: 
   ↓forms_csv_file_name [variables.TestCaseVariable-1654876170022]: 
     value: data_source_csv.csv
   ↓forms_rowvalue_col [variables.TestCaseVariable-1655113925413]: 
-    value: colonne_3
+    value: colonne 3
   ↓forms_data_type [variables.TestCaseVariable-1655123322139]: 
     value: grid
 ↓Test_Case_0 [core.TestCase]: 
   ↓forms_csv_file_name [variables.TestCaseVariable-1655126009864]: 
     value: data_source_csv.csv
+↓Test_Case_00 [core.TestCase]: 
+  ↓forms_csv_file_name [variables.TestCaseVariable-1655133750450]: 
+    value: data_source_csv.csv
+  ↓forms_rowvalue_col [variables.TestCaseVariable-1655133750453]: 
+    value: colonne 2
+  ↓forms_data_type [variables.TestCaseVariable-1655133750456]: 
+    value: grid
+  ↓forms_filter_column [variables.TestCaseVariable-1655133763524]: 
+    value: colonne 3
+  ↓forms_filter_value [variables.TestCaseVariable-1655133763526]: 
+    value: 2
+  ↓forms_filter [variables.TestCaseVariable-1655133763528]: 
+    value: 
+  ↓forms_start_index [variables.TestCaseVariable-1655133763530]: 
+    value: 0
+  ↓forms_stop_index [variables.TestCaseVariable-1655133763532]: 
+↓Test_Case_000 [core.TestCase]: 
+  ↓forms_csv_file_name [variables.TestCaseVariable-1655137265669]: 
+    value: data_source_csv.csv
+  ↓forms_stop_index [variables.TestCaseVariable-1655137277899]: 
+    value: 2
 ↓Test_Case_1 [core.TestCase]: 
   ↓forms_csv_file_name [variables.TestCaseVariable-1655117946833]: 
     value: data_source_csv.csv

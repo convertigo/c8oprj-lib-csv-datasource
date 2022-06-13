@@ -57,5 +57,7 @@ Fill the "**CSV file name**" variable with the name of the uploaded CSV file (se
 | **forms_rowvalue_col**  | Column name for the returned value of the clicked row. Grid only. |
 | **forms_filter_column** | Column name to filter on. Grid only.                              |
 | **forms_filter_value**  | Value text to filter on. Grid only.                               |
-| **forms_data_type**     | Type of the target component. Can be 'grid' or 'select'. Default is 'grid'.                              |
-| **forms_filter**        | *** DO NOT FILL ***. Used by the Select component itself.                               |
+| **forms_data_type**     | Type of the target component. Can be 'grid' or 'select'. Default is 'grid'. |
+| **forms_filter**        | *** DO NOT FILL ***. Used by the Select component itself. |
+| **forms_start_index**   | Index to start reading data from CSV file. Default is 0. |
+| **forms_stop_index**    | Exclusive index to read data up to, from CSV file. Default is blank (no limit). |
