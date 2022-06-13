@@ -1,3 +1,11 @@
+comment: |
+  '{
+      "en": {
+          "displayName": "Data sources from CSV file",
+          "comment": "Reads a CSV file to populate a Grid component in no-code Studio"
+      },
+        "types":["select", "grid"]
+  }'
 ↓IfFileExistsThenElse [steps.IfFileExistThenElseStep-1654874914446]: 
   condition: '".//data/" + forms_csv_file_name'
   ↓jThen [steps.ThenStep-1654874914955]: 
@@ -62,6 +70,14 @@
       nodeName: isSuccess
       nodeText: false
 ↓forms_csv_file_name [variables.RequestableVariable-1654874921776]: 
+  comment: |
+    '{
+        "en": {
+            "displayName": "CSV file name",
+            "comment": "Name of the CSV file to read. This file was previously uploaded using the ''upload_csv_list'' sequence. Use the Convertigo Test Platform to upload the file. The first line of the file has to be the columns title. Semicolon ('';'') is the separator for the data"
+        },
+          "types":["select", "grid"]
+    }'
 ↓Test_Case [core.TestCase]: 
   ↓forms_csv_file_name [variables.TestCaseVariable-1654876170022]: 
     value: data_source_csv.csv

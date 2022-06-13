@@ -1,3 +1,4 @@
+comment: This sequence uploads a CSV file to the server and can be later used as data sources for Grids components in the no-code Studio.
 ↓IfFileExistsThenElse [steps.IfFileExistThenElseStep-1654874426520]: 
   condition: csv_file
   ↓jThen [steps.ThenStep-1654874426523]: 
@@ -31,4 +32,5 @@
       nodeName: erreur
       nodeText: Echec upload fichier
 ↓csv_file [variables.RequestableVariable-1654874426559]: 
+  comment: File path of the CSV file to upload. Use Convertigo Test Platform. First line of the file must contain the column names and semicolon is the data separator.
   isFileUpload: true

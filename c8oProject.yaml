@@ -1,6 +1,13 @@
 ↑convertigo: 8.0.0.m006
 ↓lib_datasource_csv [core.Project]: 
-  comment: Mashup Sequencer project
+  comment: |
+    '{
+        "en": {
+            "displayName": "Data sources for Grids from CSV file",
+            "comment": "Reads a CSV file to populate a Grid or a Select component in no-code Studio"
+        },
+          "types":["select", "grid"]
+    }'
   version: 1.0
   ↓void [connectors.SqlConnector]: 🗏 connectors/void.yaml
   ↓formssource_data_from_csv [sequences.GenericSequence]: 🗏 sequences/formssource_data_from_csv.yaml
