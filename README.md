@@ -1,6 +1,6 @@
 # lib_datasource_csv
 
-This lib generates data sources for Grids components in the Convertigo No-Code Studio from à CSV file.
+This lib generates data sources for Grids components in the Convertigo No-Code Studio from a CSV file.
 
 ## Usage
 
