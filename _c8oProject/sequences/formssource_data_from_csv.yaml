@@ -2,7 +2,7 @@ comment: |
   '{
       "en": {
           "displayName": "Data sources from CSV file",
-          "comment": "Reads a CSV file to populate a Grid component in no-code Studio"
+          "comment": "Reads a CSV file to populate a Grid or a Select component in no-code Studio"
       },
         "types":["select", "grid"]
   }'
@@ -10,68 +10,247 @@ comment: |
   condition: '".//data/" + forms_csv_file_name'
   ↓jThen [steps.ThenStep-1654874914955]: 
     ↓Read_CSV [steps.ReadCSVStep-1654875073765]: 
-      dataFile: '".//data/" + "data_source_csv.csv"/*forms_csv_file_name*/'
+      dataFile: '".//data/" + forms_csv_file_name'
       separator: ;
       titleLine: true
-    ↓data [steps.XMLComplexStep-1654875183358]: 
-      nodeName: data
-      ↓Attribute [steps.XMLAttributeStep-1654875183361]: 
-        nodeName: type
-        nodeText: array
-      ↓Iterator [steps.IteratorStep-1654875183364]: 
-        sourceDefinition: 
-          - xmlizable: 
-            - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
-            - com.twinsoft.convertigo.beans.common.XMLVector: 
-              - java.lang.String: 
-                - ↑value: 1654875073765
-              - java.lang.String: 
-                - ↑value: ./line
-        ↓jIf [steps.IfStep-1655116878701]: 
-          condition: forms_filter_value != "" && forms_filter_column != "" && item.getElementsByTagName(forms_filter_column).getLength() > 0 && (item.getElementsByTagName(forms_filter_column).item(0).getTextContent()+'') == forms_filter_value
-          ↓item [steps.XMLComplexStep-1654875183370]: 
-            nodeName: item
-            ↓Attribute [steps.XMLAttributeStep-1654875183376]: 
-              nodeName: type
-              nodeText: object
-            ↓jIf [steps.IfStep-1655113633513]: 
-              condition: forms_rowvalue_col != "" && item.getElementsByTagName(forms_rowvalue_col).getLength() > 0
-              ↓rowValue [steps.ElementStep-1655113871187]: 
-                expression: item.getElementsByTagName(forms_rowvalue_col).item(0).getTextContent()
-                nodeName: __rowValue
-            ↓Iterator [steps.IteratorStep-1654875353704]: 
-              sourceDefinition: 
-                - xmlizable: 
-                  - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
-                  - com.twinsoft.convertigo.beans.common.XMLVector: 
-                    - java.lang.String: 
-                      - ↑value: 1654875183364
-                    - java.lang.String: 
-                      - ↑value: ./*
-              ↓Complex2 [steps.XMLComplexStep-1654875183415]: 
-                nodeName: col
-                ↓Attribute [steps.XMLAttributeStep-1654877678969]: 
+    ↓jIf [steps.IfStep-1655122878218]: 
+      condition: forms_data_type == "grid" || forms_data_type == ""
+      ↓data [steps.XMLComplexStep-1654875183358]: 
+        nodeName: data
+        ↓Attribute [steps.XMLAttributeStep-1654875183361]: 
+          nodeName: type
+          nodeText: array
+        ↓Iterator [steps.IteratorStep-1654875183364]: 
+          sourceDefinition: 
+            - xmlizable: 
+              - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+              - com.twinsoft.convertigo.beans.common.XMLVector: 
+                - java.lang.String: 
+                  - ↑value: 1654875073765
+                - java.lang.String: 
+                  - ↑value: ./line
+          ↓jIfThenElse [steps.IfThenElseStep-1655126398079]: 
+            condition: forms_filter_value != "" && forms_filter_column != "" && item.getElementsByTagName(forms_filter_column).getLength() > 0
+            ↓jThen [steps.ThenStep-1655126398081]: 
+              ↓jIf [steps.IfStep-1655126745261]: 
+                condition: (item.getElementsByTagName(forms_filter_column).item(0).getTextContent()+'') == forms_filter_value
+                ↓item [steps.XMLComplexStep-1654875183370]: 
+                  nodeName: item
+                  ↓Attribute [steps.XMLAttributeStep-1654875183376]: 
+                    nodeName: type
+                    nodeText: object
+                  ↓jIf [steps.IfStep-1655113633513]: 
+                    condition: forms_rowvalue_col != "" && item.getElementsByTagName(forms_rowvalue_col).getLength() > 0
+                    ↓rowValue [steps.ElementStep-1655113871187]: 
+                      expression: item.getElementsByTagName(forms_rowvalue_col).item(0).getTextContent()
+                      nodeName: __rowValue
+                  ↓Iterator [steps.IteratorStep-1654875353704]: 
+                    sourceDefinition: 
+                      - xmlizable: 
+                        - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+                        - com.twinsoft.convertigo.beans.common.XMLVector: 
+                          - java.lang.String: 
+                            - ↑value: 1654875183364
+                          - java.lang.String: 
+                            - ↑value: ./*
+                    ↓Complex2 [steps.XMLComplexStep-1654875183415]: 
+                      nodeName: col
+                      ↓Attribute [steps.XMLAttributeStep-1654877678969]: 
+                        nodeName: type
+                        nodeText: object
+                      ↓jAttribute [steps.AttributeStep-1654878014071]: 
+                        expression: '''col_''+item.getNodeName()'
+                        nodeName: originalKeyName
+                      ↓Element2 [steps.XMLElementStep-1654875183421]: 
+                        nodeName: type
+                        nodeText: string
+                      ↓Element [steps.XMLElementStep-1654875183418]: 
+                        nodeName: displayValue
+                        sourceDefinition: 
+                          - xmlizable: 
+                            - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+                            - com.twinsoft.convertigo.beans.common.XMLVector: 
+                              - java.lang.String: 
+                                - ↑value: 1654875353704
+                              - java.lang.String: 
+                                - ↑value: ./text()
+                      ↓jElement [steps.ElementStep-1654876544173]: 
+                        expression: item.getNodeName()
+                        nodeName: displayName
+            ↓jElse [steps.ElseStep-1655126398083]: 
+              ↓item [steps.XMLComplexStep-1655126409244]: 
+                nodeName: item
+                ↓Attribute [steps.XMLAttributeStep-1655126409247]: 
                   nodeName: type
                   nodeText: object
-                ↓jAttribute [steps.AttributeStep-1654878014071]: 
-                  expression: '''col_''+item.getNodeName()'
-                  nodeName: originalKeyName
-                ↓Element2 [steps.XMLElementStep-1654875183421]: 
+                ↓jIf [steps.IfStep-1655126409250]: 
+                  condition: forms_rowvalue_col != "" && item.getElementsByTagName(forms_rowvalue_col).getLength() > 0
+                  ↓rowValue [steps.ElementStep-1655126409253]: 
+                    expression: item.getElementsByTagName(forms_rowvalue_col).item(0).getTextContent()
+                    nodeName: __rowValue
+                ↓Iterator [steps.IteratorStep-1655126409256]: 
+                  sourceDefinition: 
+                    - xmlizable: 
+                      - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+                      - com.twinsoft.convertigo.beans.common.XMLVector: 
+                        - java.lang.String: 
+                          - ↑value: 1654875183364
+                        - java.lang.String: 
+                          - ↑value: ./*
+                  ↓Complex2 [steps.XMLComplexStep-1655126409259]: 
+                    nodeName: col
+                    ↓Attribute [steps.XMLAttributeStep-1655126409262]: 
+                      nodeName: type
+                      nodeText: object
+                    ↓jAttribute [steps.AttributeStep-1655126409265]: 
+                      expression: '''col_''+item.getNodeName()'
+                      nodeName: originalKeyName
+                    ↓Element2 [steps.XMLElementStep-1655126409268]: 
+                      nodeName: type
+                      nodeText: string
+                    ↓Element [steps.XMLElementStep-1655126409271]: 
+                      nodeName: displayValue
+                      sourceDefinition: 
+                        - xmlizable: 
+                          - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+                          - com.twinsoft.convertigo.beans.common.XMLVector: 
+                            - java.lang.String: 
+                              - ↑value: 1655126409256
+                            - java.lang.String: 
+                              - ↑value: ./text()
+                    ↓jElement [steps.ElementStep-1655126409274]: 
+                      expression: item.getNodeName()
+                      nodeName: displayName
+    ↓jIf1 [steps.IfStep-1655122983398]: 
+      condition: forms_data_type == "select"
+      ↓data [steps.XMLComplexStep-1655122983401]: 
+        nodeName: value
+        ↓Attribute [steps.XMLAttributeStep-1655122983404]: 
+          nodeName: type
+          nodeText: array
+        ↓Iterator [steps.IteratorStep-1655122983407]: 
+          sourceDefinition: 
+            - xmlizable: 
+              - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+              - com.twinsoft.convertigo.beans.common.XMLVector: 
+                - java.lang.String: 
+                  - ↑value: 1654875073765
+                - java.lang.String: 
+                  - ↑value: ./line
+          ↓jIfThenElse [steps.IfThenElseStep-1655124814883]: 
+            condition: forms_filter != ""
+            ↓jThen [steps.ThenStep-1655124814886]: 
+              ↓jSimpleSource [steps.SimpleSourceStep-1655124814889]: 
+                sourceDefinition: 
+                  - xmlizable: 
+                    - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+                    - com.twinsoft.convertigo.beans.common.XMLVector: 
+                      - java.lang.String: 
+                        - ↑value: 1655122983407
+                      - java.lang.String: 
+                        - ↑value: ./*[1]/text()
+                variableName: jText
+              ↓normalize_strings [steps.SimpleStep-1655124814892]: 
+                expression: |
+                  '//jText = jText.normalize(''NFD'').replace(/[\u0300-\u036f]/g, "").toLowerCase();
+                  //forms_filter = forms_filter.normalize(''NFD'').replace(/[\u0300-\u036f]/g, "").toLowerCase();
+                  
+                  var filter = jText.normalize(''NFD'').replace(/[\u0300-\u036f]/g, "").toLowerCase().indexOf(forms_filter.normalize(''NFD'').replace(/[\u0300-\u036f]/g, "").toLowerCase()) != -1 ? true : false;'
+              ↓jIf [steps.IfStep-1655124814895]: 
+                condition: filter
+                ↓item [steps.XMLComplexStep-1655127887732]: 
+                  nodeName: item
+                  ↓Attribute [steps.XMLAttributeStep-1655127887735]: 
+                    nodeName: type
+                    nodeText: object
+                  ↓Element [steps.XMLElementStep-1655127887738]: 
+                    nodeName: displayValue
+                    sourceDefinition: 
+                      - xmlizable: 
+                        - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+                        - com.twinsoft.convertigo.beans.common.XMLVector: 
+                          - java.lang.String: 
+                            - ↑value: 1655122983407
+                          - java.lang.String: 
+                            - ↑value: ./*[1]/text()
+                  ↓IfExistThenElse [steps.IfExistThenElseStep-1655127887741]: 
+                    sourceDefinition: 
+                      - xmlizable: 
+                        - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+                        - com.twinsoft.convertigo.beans.common.XMLVector: 
+                          - java.lang.String: 
+                            - ↑value: 1655122983407
+                          - java.lang.String: 
+                            - ↑value: ./*[2]
+                    ↓jThen [steps.ThenStep-1655127887744]: 
+                      ↓Element1 [steps.XMLElementStep-1655127887747]: 
+                        nodeName: value
+                        sourceDefinition: 
+                          - xmlizable: 
+                            - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+                            - com.twinsoft.convertigo.beans.common.XMLVector: 
+                              - java.lang.String: 
+                                - ↑value: 1655122983407
+                              - java.lang.String: 
+                                - ↑value: ./*[2]/text()
+                    ↓jElse [steps.ElseStep-1655127887750]: 
+                      ↓Element1 [steps.XMLElementStep-1655127887753]: 
+                        nodeName: value
+                        sourceDefinition: 
+                          - xmlizable: 
+                            - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+                            - com.twinsoft.convertigo.beans.common.XMLVector: 
+                              - java.lang.String: 
+                                - ↑value: 1655122983407
+                              - java.lang.String: 
+                                - ↑value: ./*[1]/text()
+            ↓jElse [steps.ElseStep-1655124814910]: 
+              ↓item [steps.XMLComplexStep-1655125100649]: 
+                nodeName: item
+                ↓Attribute [steps.XMLAttributeStep-1655125100652]: 
                   nodeName: type
-                  nodeText: string
-                ↓Element [steps.XMLElementStep-1654875183418]: 
+                  nodeText: object
+                ↓Element [steps.XMLElementStep-1655125100655]: 
                   nodeName: displayValue
                   sourceDefinition: 
                     - xmlizable: 
                       - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
                       - com.twinsoft.convertigo.beans.common.XMLVector: 
                         - java.lang.String: 
-                          - ↑value: 1654875353704
+                          - ↑value: 1655122983407
                         - java.lang.String: 
-                          - ↑value: ./text()
-                ↓jElement [steps.ElementStep-1654876544173]: 
-                  expression: item.getNodeName()
-                  nodeName: displayName
+                          - ↑value: ./*[1]/text()
+                ↓IfExistThenElse [steps.IfExistThenElseStep-1655125100658]: 
+                  sourceDefinition: 
+                    - xmlizable: 
+                      - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+                      - com.twinsoft.convertigo.beans.common.XMLVector: 
+                        - java.lang.String: 
+                          - ↑value: 1655122983407
+                        - java.lang.String: 
+                          - ↑value: ./*[2]
+                  ↓jThen [steps.ThenStep-1655125100661]: 
+                    ↓Element1 [steps.XMLElementStep-1655125100664]: 
+                      nodeName: value
+                      sourceDefinition: 
+                        - xmlizable: 
+                          - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+                          - com.twinsoft.convertigo.beans.common.XMLVector: 
+                            - java.lang.String: 
+                              - ↑value: 1655122983407
+                            - java.lang.String: 
+                              - ↑value: ./*[2]/text()
+                  ↓jElse [steps.ElseStep-1655125100667]: 
+                    ↓Element1 [steps.XMLElementStep-1655125100670]: 
+                      nodeName: value
+                      sourceDefinition: 
+                        - xmlizable: 
+                          - ↑classname: com.twinsoft.convertigo.beans.common.XMLVector
+                          - com.twinsoft.convertigo.beans.common.XMLVector: 
+                            - java.lang.String: 
+                              - ↑value: 1655122983407
+                            - java.lang.String: 
+                              - ↑value: ./*[1]/text()
   ↓jElse [steps.ElseStep-1654874914957]: 
     ↓Element [steps.XMLElementStep-1654875012486]: 
       nodeName: isSuccess
@@ -91,7 +270,7 @@ comment: |
     '{
         "en": {
             "displayName": "Column name for row value",
-            "comment": "Optional. Name of the column to retrieve value from, when the grid rows is clicked."
+            "comment": "Optional. Grid only. Name of the column to retrieve value from, when the grid rows is clicked."
         },
           "types":["select", "grid"]
     }'
@@ -101,7 +280,7 @@ comment: |
     '{
         "en": {
             "displayName": "Column name to filter",
-            "comment": "Optional. Name of the column to search value into."
+            "comment": "Optional. Grid only. Name of the column to search value into."
         },
           "types":["select", "grid"]
     }'
@@ -111,9 +290,29 @@ comment: |
     '{
         "en": {
             "displayName": "Value text to filter",
-            "comment": "Optional. In conjonction with the column name filter, only displays line that contains that specific value."
+            "comment": "Optional. Grid only. In conjonction with the column name filter, only displays line that contains that specific value."
         },
           "types":["select", "grid"]
+    }'
+  value: 
+↓forms_data_type [variables.RequestableVariable-1655122827938]: 
+  comment: |
+    '{
+        "en": {
+            "displayName": "Target component",
+            "comment": "Type of the target component. Can be ''grid'' or ''select''. Default is ''grid''."
+        },
+          "types":["select", "grid"]
+    }'
+  value: grid
+↓forms_filter [variables.RequestableVariable-1655124012466]: 
+  comment: |
+    '{
+        "en": {
+            "displayName": "Internal Select filter",
+            "comment": "*** DO NOT FILL ***. Used by the Select component itself."
+        },
+          "types":["select"]
     }'
   value: 
 ↓Test_Case [core.TestCase]: 
@@ -121,6 +320,11 @@ comment: |
     value: data_source_csv.csv
   ↓forms_rowvalue_col [variables.TestCaseVariable-1655113925413]: 
     value: colonne_3
+  ↓forms_data_type [variables.TestCaseVariable-1655123322139]: 
+    value: grid
+↓Test_Case_0 [core.TestCase]: 
+  ↓forms_csv_file_name [variables.TestCaseVariable-1655126009864]: 
+    value: data_source_csv.csv
 ↓Test_Case_1 [core.TestCase]: 
   ↓forms_csv_file_name [variables.TestCaseVariable-1655117946833]: 
     value: data_source_csv.csv
@@ -130,3 +334,33 @@ comment: |
     value: value 02
   ↓forms_rowvalue_col [variables.TestCaseVariable-1655118245998]: 
     value: colonne_2
+  ↓forms_data_type [variables.TestCaseVariable-1655123329110]: 
+    value: grid
+↓Test_Case_2 [core.TestCase]: 
+  ↓forms_csv_file_name [variables.TestCaseVariable-1655125432943]: 
+    required: true
+    value: data_source_select_csv.csv
+  ↓forms_rowvalue_col [variables.TestCaseVariable-1655125432945]: 
+    value: 
+  ↓forms_filter_column [variables.TestCaseVariable-1655125432947]: 
+    value: 
+  ↓forms_filter_value [variables.TestCaseVariable-1655125432949]: 
+    value: 
+  ↓forms_data_type [variables.TestCaseVariable-1655125432951]: 
+    value: select
+  ↓forms_filter [variables.TestCaseVariable-1655125432953]: 
+    value: 
+↓Test_Case_3 [core.TestCase]: 
+  ↓forms_csv_file_name [variables.TestCaseVariable-1655127556030]: 
+    required: true
+    value: data_source_select_csv.csv
+  ↓forms_rowvalue_col [variables.TestCaseVariable-1655127556033]: 
+    value: 
+  ↓forms_filter_column [variables.TestCaseVariable-1655127556036]: 
+    value: 
+  ↓forms_filter_value [variables.TestCaseVariable-1655127556039]: 
+    value: 
+  ↓forms_data_type [variables.TestCaseVariable-1655127556042]: 
+    value: select
+  ↓forms_filter [variables.TestCaseVariable-1655127556045]: 
+    value: 03

@@ -3,7 +3,7 @@
   comment: |
     '{
         "en": {
-            "displayName": "Data sources for Grids from CSV file",
+            "displayName": "Data sources from CSV file",
             "comment": "Reads a CSV file to populate a Grid or a Select component in no-code Studio"
         },
           "types":["select", "grid"]

@@ -40,6 +40,8 @@ Fill the "**CSV file name**" variable with the name of the uploaded CSV file (se
 | Name                    | Description                                           |
 |-------------------------|-------------------------------------------------------|
 | **forms_csv_file_name** | CSV File Name                                         |
-| **forms_rowvalue_col**  | Column name for the returned value of the clicked row |
-| **forms_filter_column** | Column name to filter on                              |
-| **forms_filter_value**  | Value text to filter on                               |
+| **forms_rowvalue_col**  | Column name for the returned value of the clicked row. Grid only. |
+| **forms_filter_column** | Column name to filter on. Grid only.                              |
+| **forms_filter_value**  | Value text to filter on. Grid only.                               |
+| **forms_data_type**     | Type of the target component. Can be 'grid' or 'select'. Default is 'grid'.                              |
+| **forms_filter**        | *** DO NOT FILL ***. Used by the Select component itself.                               |
