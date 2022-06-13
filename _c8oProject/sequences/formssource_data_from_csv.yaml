@@ -259,7 +259,7 @@ comment: |
     '{
         "en": {
             "displayName": "CSV file name",
-            "comment": "Mandatory. Name of the CSV file to read. This file was previously uploaded using the ''upload_csv_list'' sequence. Use the Convertigo Test Platform to upload the file. The first line of the file has to be the columns title. Semicolon ('';'') is the separator for the data"
+            "comment": "Mandatory. Name of the CSV file to read. This file was previously uploaded using the ''upload_csv_list'' sequence. Use the Convertigo Test Platform to upload the file. The first line of the file has to be the columns title. Comma ('','') is the separator for the data"
         },
           "types":["select", "grid"]
     }'
